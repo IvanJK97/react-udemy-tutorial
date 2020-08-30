@@ -1,7 +1,22 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+
 import "./App.css";
-import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person";
+
+const StyledButton = styled.button`
+  background-color: ${(props) => (props.alt ? "red" : "green")};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => (props.alt ? "salmon" : "lightgreen")};
+    color: black;
+  }
+`;
 
 class App extends Component {
   // State is a special property/variable of the class
@@ -43,19 +58,6 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-      ":hover": {
-        backgroundColor: "lightgreen",
-        color: "black",
-      },
-    };
-
     let persons = null;
     if (this.state.showPersons) {
       persons = (
@@ -72,13 +74,6 @@ class App extends Component {
           ))}
         </div>
       );
-      // Change color dynamically
-      style.backgroundColor = "red";
-      // Radium CSS pseudo selector
-      style[":hover"] = {
-        backgroundColor: "salmon",
-        color: "black",
-      };
     }
 
     // Dynamically assign className
@@ -93,19 +88,20 @@ class App extends Component {
     // Explanation of this keyword in assignment solution 11:53
     // setState is provided by component while React is needed for JSX to convert to React.createElement
     return (
-      <StyleRoot>
-        <div className="App">
-          <h1>Hi I'm a React App</h1>
-          <p className={classes.join(" ")}>Lorem ipsum dolor sit amet</p>
-          <button style={style} onClick={this.togglePersonsHandler}>
-            Toggle Persons
-          </button>
-          {persons}
-        </div>
-      </StyleRoot>
+      <div className="App">
+        <h1>Hi I'm a React App</h1>
+        <p className={classes.join(" ")}>Lorem ipsum dolor sit amet</p>
+        <StyledButton
+          alt={this.state.showPersons}
+          onClick={this.togglePersonsHandler}
+        >
+          Toggle Persons
+        </StyledButton>
+        {persons}
+      </div>
     );
   }
 }
 
 // What JSX actually gets compile to - React.createElement(...)
-export default Radium(App); // Radium is HOC
+export default App;

@@ -1,18 +1,24 @@
 import React from "react";
-import Radium from "radium";
-import "./Person.css";
+import styled from "styled-components";
+// import "./Person.css";
+
+const StyledDiv = styled.div`
+  width: 60%;
+  margin: 16px auto;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 3px #ccc;
+  padding: 16px;
+  text-align: center;
+
+  /* Person div will not keep resizing/expanding once it's > 500px */
+  @media (min-width: 500px) {
+    width: 450px;
+  }
+`;
 
 const person = (props) => {
-  // Radium CSS media queries
-  // Person div will not keep resizing/expanding once it's > 500px
-  const style = {
-    "@media (min-width: 500px)": {
-      width: "450px",
-    },
-  };
   return (
-    // style will override className as a CSS rule
-    <div className="Person" style={style}>
+    <StyledDiv>
       <p>
         I'm {props.name} and I am {props.age} years old!
       </p>
@@ -23,8 +29,8 @@ const person = (props) => {
         value={props.name}
       />
       <button onClick={() => props.delete(props.personId)}>Delete</button>
-    </div>
+    </StyledDiv>
   );
 };
 
-export default Radium(person);
+export default person;
