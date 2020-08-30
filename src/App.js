@@ -43,7 +43,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
@@ -66,6 +67,17 @@ class App extends Component {
           ))}
         </div>
       );
+      // Change color dynamically
+      style.backgroundColor = "red";
+    }
+
+    // Dynamically assign className
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push("red"); // classes = ['red']
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push("bold"); // classes = ['red', 'bold']
     }
 
     // Explanation of this keyword in assignment solution 11:53
@@ -73,6 +85,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Hi I'm a React App</h1>
+        <p className={classes.join(" ")}>Lorem ipsum dolor sit amet</p>
         <button style={style} onClick={this.togglePersonsHandler}>
           Toggle Persons
         </button>
