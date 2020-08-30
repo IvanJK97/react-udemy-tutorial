@@ -1,9 +1,18 @@
 import React from "react";
+import Radium from "radium";
 import "./Person.css";
 
 const person = (props) => {
+  // Radium CSS media queries
+  // Person div will not keep resizing/expanding once it's > 500px
+  const style = {
+    "@media (min-width: 500px)": {
+      width: "450px",
+    },
+  };
   return (
-    <div className="Person">
+    // style will override className as a CSS rule
+    <div className="Person" style={style}>
       <p>
         I'm {props.name} and I am {props.age} years old!
       </p>
@@ -18,4 +27,4 @@ const person = (props) => {
   );
 };
 
-export default person;
+export default Radium(person);

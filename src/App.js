@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person";
 
 class App extends Component {
@@ -49,6 +50,10 @@ class App extends Component {
       border: "1px solid blue",
       padding: "8px",
       cursor: "pointer",
+      ":hover": {
+        backgroundColor: "lightgreen",
+        color: "black",
+      },
     };
 
     let persons = null;
@@ -69,6 +74,11 @@ class App extends Component {
       );
       // Change color dynamically
       style.backgroundColor = "red";
+      // Radium CSS pseudo selector
+      style[":hover"] = {
+        backgroundColor: "salmon",
+        color: "black",
+      };
     }
 
     // Dynamically assign className
@@ -83,17 +93,19 @@ class App extends Component {
     // Explanation of this keyword in assignment solution 11:53
     // setState is provided by component while React is needed for JSX to convert to React.createElement
     return (
-      <div className="App">
-        <h1>Hi I'm a React App</h1>
-        <p className={classes.join(" ")}>Lorem ipsum dolor sit amet</p>
-        <button style={style} onClick={this.togglePersonsHandler}>
-          Toggle Persons
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi I'm a React App</h1>
+          <p className={classes.join(" ")}>Lorem ipsum dolor sit amet</p>
+          <button style={style} onClick={this.togglePersonsHandler}>
+            Toggle Persons
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
 // What JSX actually gets compile to - React.createElement(...)
-export default App;
+export default Radium(App); // Radium is HOC
