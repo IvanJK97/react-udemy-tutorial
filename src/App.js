@@ -1,22 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 
-import "./App.css";
+import styles from "./App.module.css";
 import Person from "./Person/Person";
-
-const StyledButton = styled.button`
-  background-color: ${(props) => (props.alt ? "red" : "green")};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => (props.alt ? "salmon" : "lightgreen")};
-    color: black;
-  }
-`;
 
 class App extends Component {
   // State is a special property/variable of the class
@@ -59,6 +44,8 @@ class App extends Component {
 
   render() {
     let persons = null;
+    let btnClass = [styles.Button];
+
     if (this.state.showPersons) {
       persons = (
         <div>
@@ -74,29 +61,30 @@ class App extends Component {
           ))}
         </div>
       );
+      btnClass.push(styles.Red);
     }
 
     // Dynamically assign className
     const classes = [];
     if (this.state.persons.length <= 2) {
-      classes.push("red"); // classes = ['red']
+      classes.push(styles.red); // classes = ['red']
     }
     if (this.state.persons.length <= 1) {
-      classes.push("bold"); // classes = ['red', 'bold']
+      classes.push(styles.bold); // classes = ['red', 'bold']
     }
 
-    // Explanation of this keyword in assignment solution 11:53
+    // Explanation of this keyword in assignment 1 solution 11:53
     // setState is provided by component while React is needed for JSX to convert to React.createElement
     return (
-      <div className="App">
+      <div className={styles.App}>
         <h1>Hi I'm a React App</h1>
         <p className={classes.join(" ")}>Lorem ipsum dolor sit amet</p>
-        <StyledButton
-          alt={this.state.showPersons}
+        <button
+          className={btnClass.join(" ")}
           onClick={this.togglePersonsHandler}
         >
           Toggle Persons
-        </StyledButton>
+        </button>
         {persons}
       </div>
     );
