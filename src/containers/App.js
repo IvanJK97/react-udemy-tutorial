@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-
 import styles from "./App.module.css";
-import Person from "./Person/Person";
+import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log("[App.js] constructor");
+    // can do this.state = {...} here
+  }
   // State is a special property/variable of the class
   state = {
     persons: [
@@ -13,6 +18,32 @@ class App extends Component {
     ],
     showPersons: false,
   };
+
+  static getDeriveStateFromProps(props, state) {
+    console.log("[App.js] getDerivedStateFromProps", props);
+    return state;
+  }
+
+  // Deprecated
+  // componentWillReceiveProps(props) {...}
+  // componentWillMount() {
+  //   console.log("[App.js] componentWillMount");
+  // }
+
+  // Used the most for component creation
+  componentDidMount() {
+    console.log("[App.js] componentDidMount");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[App.js] shouldComponentUpdate");
+    return true;
+  }
+
+  // Used the most for component prop updates
+  componentDidUpdate() {
+    console.log("[App.js] componentDidUpdate");
+  }
 
   nameChangeHandler = (event, id) => {
     // Find the index in persons array that matches id
@@ -43,48 +74,29 @@ class App extends Component {
   };
 
   render() {
+    console.log("[App.js] render");
     let persons = null;
-    let btnClass = [styles.Button];
 
     if (this.state.showPersons) {
       persons = (
-        <div>
-          {this.state.persons.map((person) => (
-            <Person
-              key={person.id}
-              personId={person.id}
-              name={person.name}
-              age={person.age}
-              changed={this.nameChangeHandler}
-              delete={this.deletePersonHandler}
-            />
-          ))}
-        </div>
+        <Persons
+          persons={this.state.persons}
+          changed={this.nameChangeHandler}
+          clicked={this.deletePersonHandler}
+        />
       );
-      btnClass.push(styles.Red);
-    }
-
-    // Dynamically assign className
-    const classes = [];
-    if (this.state.persons.length <= 2) {
-      classes.push(styles.red); // classes = ['red']
-    }
-    if (this.state.persons.length <= 1) {
-      classes.push(styles.bold); // classes = ['red', 'bold']
     }
 
     // Explanation of this keyword in assignment 1 solution 11:53
     // setState is provided by component while React is needed for JSX to convert to React.createElement
     return (
       <div className={styles.App}>
-        <h1>Hi I'm a React App</h1>
-        <p className={classes.join(" ")}>Lorem ipsum dolor sit amet</p>
-        <button
-          className={btnClass.join(" ")}
-          onClick={this.togglePersonsHandler}
-        >
-          Toggle Persons
-        </button>
+        <Cockpit
+          title={this.props.appTitle}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler}
+        />
         {persons}
       </div>
     );

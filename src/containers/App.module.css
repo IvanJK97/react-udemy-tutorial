@@ -31,6 +31,7 @@ Can also do for all buttons in app
 
 .Button.Red {
   background-color: red;
+  color: black;
 }
 
 .Button.Red:hover {
