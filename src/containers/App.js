@@ -29,19 +29,21 @@ class App extends Component {
   // componentWillMount() {
   //   console.log("[App.js] componentWillMount");
   // }
+  // componentWillUpdate() ...
 
   // Used the most for component creation
   componentDidMount() {
     console.log("[App.js] componentDidMount");
   }
 
+  // For performance purposes, will tell React whether to continue update
   shouldComponentUpdate(nextProps, nextState) {
     console.log("[App.js] shouldComponentUpdate");
     return true;
   }
 
   // Used the most for component prop updates
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     console.log("[App.js] componentDidUpdate");
   }
 
@@ -94,7 +96,7 @@ class App extends Component {
         <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
-          persons={this.state.persons}
+          personsLength={this.state.persons.length}
           clicked={this.togglePersonsHandler}
         />
         {persons}
