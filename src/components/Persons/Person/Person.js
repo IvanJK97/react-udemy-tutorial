@@ -1,11 +1,14 @@
 import React, { Component } from "react";
+import App from "../../../containers/App";
+import Aux from "../../../hoc/Auxiliary";
+import WithClass from "../../../hoc/WithClass";
 import classes from "./Person.module.css";
 
 class Person extends Component {
   render() {
     // console.log("[Person.js] rendering");
     return (
-      <div className={classes.Person}>
+      <WithClass classes={classes.Person}>
         <p>
           I'm {this.props.name} and I am {this.props.age} years old!
         </p>
@@ -18,7 +21,7 @@ class Person extends Component {
         <button onClick={() => this.props.delete(this.props.personId)}>
           Delete
         </button>
-      </div>
+      </WithClass>
     );
   }
 }

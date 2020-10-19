@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./App.module.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
+import WithClass from "../hoc/WithClass";
 
 class App extends Component {
   constructor(props) {
@@ -92,7 +93,7 @@ class App extends Component {
     // Explanation of this keyword in assignment 1 solution 11:53
     // setState is provided by component while React is needed for JSX to convert to React.createElement
     return (
-      <div className={styles.App}>
+      <WithClass classes={styles.App}>
         <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
@@ -100,7 +101,7 @@ class App extends Component {
           clicked={this.togglePersonsHandler}
         />
         {persons}
-      </div>
+      </WithClass>
     );
   }
 }
