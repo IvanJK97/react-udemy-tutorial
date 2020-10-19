@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import styles from "./App.module.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
-import WithClass from "../hoc/WithClass";
+import Aux from "../hoc/Auxiliary";
+import withClass from "../hoc/withClass";
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends Component {
       { id: "3c", name: "Stephanie", age: 26 },
     ],
     showPersons: false,
+    changeCounter: 0,
   };
 
   static getDeriveStateFromProps(props, state) {
@@ -59,7 +61,14 @@ class App extends Component {
     };
     const persons = [...this.state.persons];
     persons[personIndex] = newPerson;
-    this.setState({ persons });
+    // SetState is not guaranteed to finish and set state immediately, so should use prevState function syntax
+    // Should not do this.setState({ changeCounter: this.state.changeCounter + 1})
+    this.setState((prevState, props) => {
+      return {
+        persons,
+        changeCounter: prevState.changeCounter + 1,
+      };
+    });
   };
 
   togglePersonsHandler = () => {
@@ -93,7 +102,7 @@ class App extends Component {
     // Explanation of this keyword in assignment 1 solution 11:53
     // setState is provided by component while React is needed for JSX to convert to React.createElement
     return (
-      <WithClass classes={styles.App}>
+      <Aux>
         <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
@@ -101,10 +110,10 @@ class App extends Component {
           clicked={this.togglePersonsHandler}
         />
         {persons}
-      </WithClass>
+      </Aux>
     );
   }
 }
 
 // What JSX actually gets compile to - React.createElement(...)
-export default App;
+export default withClass(App, styles.App);
