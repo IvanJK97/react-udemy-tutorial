@@ -1,18 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import classes from "./Cockpit.module.css";
 
 const Cockpit = (props) => {
-  // useEffect will run first arg every render cycle - encompasses componentDidMount and componentDidUpdate
+  const toggleBtnRef = useRef(null); // accesses DOM elements
+
+  // useEffect will run first arg after every render cycle - encompasses componentDidMount and componentDidUpdate
   // Second argument says when this useEffect will run on which data change
   // Can also have multiple useEffects that do different things
   useEffect(() => {
     console.log("[Cockpit.js] useEffect");
-    const timer = setTimeout(() => {
-      alert("Saved data to cloud!");
-    }, 1000);
+    // const timer = setTimeout(() => {
+    //   alert("Saved data to cloud!");
+    // }, 1000);
+    toggleBtnRef.current.click();
     return () => {
       console.log("[Cockpit.js] cleanup work in useEffect");
-      clearTimeout(timer);
+      // clearTimeout(timer);
     };
   }, [props.persons]);
 
@@ -46,7 +49,7 @@ const Cockpit = (props) => {
     <div>
       <h1>Hi I'm a {props.title}</h1>
       <p className={assignedClasses.join(" ")}>Lorem ipsum dolor sit amet</p>
-      <button className={btnClass} onClick={props.clicked}>
+      <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
         Toggle Persons
       </button>
     </div>
