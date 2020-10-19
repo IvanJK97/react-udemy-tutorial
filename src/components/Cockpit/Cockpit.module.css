@@ -17,6 +17,7 @@
   font: inherit;
   border: 1px solid blue;
   padding: 8px;
+  margin: 5px;
   cursor: pointer;
 }
 

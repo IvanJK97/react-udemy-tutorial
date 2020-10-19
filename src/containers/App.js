@@ -4,6 +4,7 @@ import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 import Aux from "../hoc/Auxiliary";
 import withClass from "../hoc/withClass";
+import AuthContext from "../context/auth-context";
 
 class App extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends Component {
     ],
     showPersons: false,
     changeCounter: 0,
+    authenticated: false,
   };
 
   static getDeriveStateFromProps(props, state) {
@@ -85,6 +87,10 @@ class App extends Component {
     this.setState({ persons });
   };
 
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  };
+
   render() {
     console.log("[App.js] render");
     let persons = null;
@@ -95,6 +101,7 @@ class App extends Component {
           persons={this.state.persons}
           changed={this.nameChangeHandler}
           clicked={this.deletePersonHandler}
+          isAuthenticated={this.state.authenticated}
         />
       );
     }
@@ -103,13 +110,20 @@ class App extends Component {
     // setState is provided by component while React is needed for JSX to convert to React.createElement
     return (
       <Aux>
-        <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          personsLength={this.state.persons.length}
-          clicked={this.togglePersonsHandler}
-        />
-        {persons}
+        <AuthContext.Provider
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler,
+          }}
+        >
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+          {persons}
+        </AuthContext.Provider>
       </Aux>
     );
   }

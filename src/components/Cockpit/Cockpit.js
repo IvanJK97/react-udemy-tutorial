@@ -1,8 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
+import AuthContext from "../../context/auth-context";
 import classes from "./Cockpit.module.css";
 
 const Cockpit = (props) => {
   const toggleBtnRef = useRef(null); // accesses DOM elements
+
+  const authContext = useContext(AuthContext);
 
   // useEffect will run first arg after every render cycle - encompasses componentDidMount and componentDidUpdate
   // Second argument says when this useEffect will run on which data change
@@ -51,6 +54,16 @@ const Cockpit = (props) => {
       <p className={assignedClasses.join(" ")}>Lorem ipsum dolor sit amet</p>
       <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>
         Toggle Persons
+      </button>
+      {/* <AuthContext.Consumer>
+        {(context) => (
+          <button onClick={context.login} className={btnClass}>
+            Log In
+          </button>
+        )}
+      </AuthContext.Consumer> */}
+      <button onClick={authContext.login} className={btnClass}>
+        Log in
       </button>
     </div>
   );
